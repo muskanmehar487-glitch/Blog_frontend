@@ -32,20 +32,23 @@ jobs:
                const coredemo = require('@actions/core')
                return await coredemo.getIDToken()
            result-encoding: string
-            - name:Setup Node.js
-         uses:actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '20.x'
       - name: Clean npm cache
         run: npm cache clean --force
       - name: Install dependencies
         run: npm ci
-      - name: dist
+      - name: Build
         env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL || blogbackend-bha3avfgc9avbae5.eastasia-01.azurewebsites.net/api}}
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://blogbackend-bha3avfgc9avbae5.eastasia-01.azurewebsites.net/api' }}
+        run: npm run build
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://blogbackend-bha3avfgc9avbae5.eastasia-01.azurewebsites.net/api' }}
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PURPLE_ISLAND_0777A3900 }}
           action: "upload"
@@ -67,6 +70,3 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           action: "close"
-
-
-
