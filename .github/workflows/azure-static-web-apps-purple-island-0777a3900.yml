@@ -23,7 +23,7 @@ jobs:
           submodules: true
           lfs: false
       - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client
+        run: npm install @actions/core@11.6.1 @actions/http-client
       - name: Get Id Token
         uses: actions/github-script@v6
         id: idtoken
@@ -42,13 +42,13 @@ jobs:
         run: npm ci
       - name: Build
         env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://blogbackend-bha3avfgc9avbae5.eastasia-01.azurewebsites.net/api' }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://blog-backend1-fdhyfebhh9dnaufx.eastasia-01.azurewebsites.net/api' }}
         run: npm run build
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://blogbackend-bha3avfgc9avbae5.eastasia-01.azurewebsites.net/api' }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://blog-backend1-fdhyfebhh9dnaufx.eastasia-01.azurewebsites.net/api' }}
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PURPLE_ISLAND_0777A3900 }}
           action: "upload"
